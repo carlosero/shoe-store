@@ -3,7 +3,7 @@ class Endpoints::V1::InventoryUpdates < Endpoints::V1::Base
 
     desc 'Receives inventory updates and processes them'
     post do
-      # todo
+      InventoryManager.process_update!(params[:store], params[:model], params[:inventory].to_i)
     end
   end
 end
