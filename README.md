@@ -106,3 +106,19 @@ EM.run {
   end
 }
 ```
+
+# Backend
+
+## Configuration
+Backend is based off rails so we need to so some configurations before starting the server:
+- Install gems with: `bundle install`
+- Initialize/start a postgresql DB or container. No special PG version/extension required, just have it open on 5432 for user 'postgres'
+```
+docker run -d --name shoe-store-db -e POSTGRES_HOST_AUTH_METHOD=trust -p 5432:5432 postgres
+```
+- Go into backend (`cd backend`) and run `rails db:schema:load` for initializing.
+- Start server with `rails s`
+
+## Websockets proxy
+In order to get the websocket data into rails, we use a "proxy" that receives the data from the websocket and forwards it to rails via API. Rails can be running in multiple servers and we need only one websocket connection to be sending data to it.
+- Running it: `ruby ws-proxy.rb`
