@@ -8,7 +8,6 @@ import { ActionCableContext } from '.';
 function App() {
   const [channel, setChannel] = useState(null)
   const [storesData, setStoresData] = useState({});
-  const [whatever, setWhatever] = useState('');
   let initialized = false;
 
   const handleReceived = (storesData) => {
@@ -27,10 +26,9 @@ function App() {
     setChannel(channel)
 
     // fetch current db state from backend
-    // axios.get('http://localhost:5000/api/v1/inventory').then((response) => {
-    //   setStoresData(response.data);
-    //   setWhatever('pepe')
-    // });
+    axios.get('http://localhost:5000/api/v1/inventory').then((response) => {
+      setStoresData(response.data);
+    });
 
     initialized = true;
 

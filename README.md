@@ -107,9 +107,9 @@ EM.run {
 }
 ```
 
-# Backend
+# Solution
 
-## Configuration
+## Backend
 Backend is based off rails so we need to so some configurations before starting the server:
 - Install gems with: `bundle install`
 - Initialize/start a postgresql DB or container. No special PG version/extension required, just have it open on 5432 for user 'postgres'
@@ -117,8 +117,17 @@ Backend is based off rails so we need to so some configurations before starting 
 docker run -d --name shoe-store-db -e POSTGRES_HOST_AUTH_METHOD=trust -p 5432:5432 postgres
 ```
 - Go into backend (`cd backend`) and run `rails db:schema:load` for initializing.
-- Start server with `rails s`
+- Start server with `rails s -b 0.0.0.0 -p 5000`
+
+### Test that your installation works
+- Initialize test DB `RAILS_ENV=test rails db:schema:load`
+- Run `RAILS_ENV=test rspec`
 
 ## Websockets proxy
 In order to get the websocket data into rails, we use a "proxy" that receives the data from the websocket and forwards it to rails via API. Rails can be running in multiple servers and we need only one websocket connection to be sending data to it.
 - Running it: `ruby ws-proxy.rb`
+
+## Frontend
+Frontend is based off react with functional components so basically you need to:
+- Install packages `yarn install`
+- Start project with `yarn start`

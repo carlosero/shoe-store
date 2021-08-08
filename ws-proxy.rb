@@ -10,7 +10,7 @@ require 'uri'
 require 'net/http'
 
 WS_URL = 'ws://localhost:8080/'
-API_URL = URI('http://localhost:3000/api/v1/stock_updates')
+API_URL = URI('http://localhost:5000/api/v1/stock_updates')
 
 EM.run {
   ws = Faye::WebSocket::Client.new(WS_URL)
