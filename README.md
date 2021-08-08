@@ -123,6 +123,10 @@ docker run -d --name shoe-store-db -e POSTGRES_HOST_AUTH_METHOD=trust -p 5432:54
 - Initialize test DB `RAILS_ENV=test rails db:schema:load`
 - Run `RAILS_ENV=test rspec`
 
+### Inventory Analysis tool
+- If the inventory is going crazy and you don't know what to do, simply use this tool and do what it says, it will get better:
+- Run `rake inventory_analysis`
+
 ## Websockets proxy
 In order to get the websocket data into rails, we use a "proxy" that receives the data from the websocket and forwards it to rails via API. Rails can be running in multiple servers and we need only one websocket connection to be sending data to it.
 - Running it: `ruby ws-proxy.rb`
