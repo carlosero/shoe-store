@@ -9,7 +9,10 @@ class Endpoints::V1::Inventory < Endpoints::V1::Base
   resource :inventory do
     desc 'Returns the current status of all stores + models'
     get do
-      present Store.includes(inventories: :shoe_model), with: Entities::V1::Store
+      Store.includes(inventories: :shoe_model).inject({}) do |stores, store|
+        stores[store.id] = Entities::V1::Store.represent(store)
+        stores
+      end
     end
   end
 end

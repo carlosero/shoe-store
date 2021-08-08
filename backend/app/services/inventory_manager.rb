@@ -14,7 +14,27 @@ class InventoryManager
 
       inventory.update_attributes(stock: stock)
 
-      ActionCable.server.broadcast(INVENTORY_WS_CHANNEL, { store: store_name, model: model_name, inventory: stock })
+      broadcast_update(store, shoe_model, inventory)
+    end
+
+    # This was my original code
+    # def broadcast_update(store, shoe_model, inventory)
+    #   # perform update just for this model and store, nothing more
+    #   store_update = {
+    #     id: store.id,
+    #     name: store.name,
+    #     shoe_models: { shoe_model.id => { name: shoe_model.name, stock: inventory.stock } }
+    #   }
+    #   ActionCable.server.broadcast(INVENTORY_WS_CHANNEL, store_update)
+    # end
+
+    # This is what I ended up doing after spending hours trying to fix react+state+actioncable+hooks
+    def broadcast_update(*args)
+      update = Store.includes(inventories: :shoe_model).inject({}) do |stores, store|
+        stores[store.id] = Entities::V1::Store.represent(store)
+        stores
+      end
+      ActionCable.server.broadcast(INVENTORY_WS_CHANNEL, update)
     end
   end
 end
