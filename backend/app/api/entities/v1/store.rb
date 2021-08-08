@@ -6,7 +6,9 @@ class Entities::V1::Store < Entities::Base
       stock
     end
   end
-  expose :updated_at
+  expose :updated_at do |store|
+    store.updated_at.iso8601
+  end
   expose :total_stock do |store|
     store.inventories.sum(:stock)
   end
